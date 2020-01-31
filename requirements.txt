@@ -1,0 +1,4 @@
+multidimensional_urlencode==0.0.4
+pytest==3.3.2
+requests==2.18.4
+requests-oauthlib==0.8.0

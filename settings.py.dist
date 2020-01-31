@@ -1,0 +1,6 @@
+# Main settings for examples
+
+[DEFAULT]
+BASE_URL = http://xibo_cms_url/api
+CLIENT_ID = application_client_id
+CLIENT_SECRET = application_client_secret
