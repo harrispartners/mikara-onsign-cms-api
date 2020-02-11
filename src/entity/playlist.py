@@ -1,14 +1,19 @@
+import graphene
+
 from src.entity.base_entity import BaseEntity
+from src.entity.playable import Playable
+from src.types import *
 
 
-class Playlist(BaseEntity):
-    def __init__(self, xibo):
-        super(Playlist, self).__init__(xibo, '/playlist')
-
-    def widget(self, data={}):
-        self.url = self.url + '/widget'
-        return self.get(data=data)
-
-    def library_assign(self, id=0, data={}):
-        self.url = self.url + '/library/assign/' + str(id)
-        return self.post(data=data)
+class Playlist(Playable):
+    id = graphene.ID(required=True)
+    name = graphene.String(required=True)
+    category = graphene.String(required=True)
+    tags = graphene.List(graphene.NonNull(graphene.String), required=True)
+    isPaused = graphene.Boolean(required=True)
+    restrictions = graphene.List(graphene.NonNull(graphene.Field(Restriction)))
+    items = graphene.List(graphene.Field(Playable))
+    
+    
+    def __init__(self):
+        super(Playlist, self).__init__()

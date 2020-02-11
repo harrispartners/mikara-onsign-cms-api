@@ -20,10 +20,10 @@ from src.entity.user import User
 from src.entity.user_group import UserGroup
 from src.entity.widget.widget import Widget
 from src.entity.widget.textwidget import TextWidget
-from src.xibo import Xibo
+from src.onsign import OnSign
 
 
-class XiboFactory:
+class OnSignFactory:
     ENTITIES = {
         'About': About,
         'Campaign': Campaign,
@@ -49,14 +49,14 @@ class XiboFactory:
         'TextWidget': TextWidget,
     }
 
-    xibo = None
+    onsign = None
 
     def __init__(self, config):
-        if self.xibo is None:
-            self.xibo = Xibo(config)
+        if self.onsign is None:
+            self.onsign = OnSign(config)
 
     def get_entity(self, type):
         if type in self.ENTITIES:
-            return self.ENTITIES[type](self.xibo)
+            return self.ENTITIES[type](self.onsign)
         else:
             raise ValueError('Entity "' + type + '" doesn\'t exists.')

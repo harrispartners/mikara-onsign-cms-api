@@ -2,7 +2,7 @@ from requests_oauthlib import OAuth2Session
 from oauthlib.oauth2 import BackendApplicationClient
 
 
-class Xibo:
+class OnSign:
     base_url = ''
     client_id = ''
     client_secret = ''

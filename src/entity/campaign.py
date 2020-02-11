@@ -1,22 +1,15 @@
-from oauthlib.oauth2.rfc6749.errors import TokenExpiredError
-from src.entity.base_entity import BaseEntity
+import graphene
+
+from src.entity.playable import Playable
+from src.entity.restriction import Restriction
 
 
-class Campaign(BaseEntity):
-    def __init__(self, xibo):
-        super(Campaign, self).__init__(xibo, '/campaign')
+class Campaign(Playable):
+    category = graphene.String(required=True)
+    tags = graphene.List(graphene.NonNull(graphene.String), required=True)
+    isPaused = graphene.Boolean(required=True)
+    restrictions = graphene.List(graphene.NonNull(graphene.Field(Restriction)))
 
-    def layout_assign(self, id=0, data={}):
-        self.url = self.url + '/layout/assign/' + str(id)
-        return self.post(data=data)
-    
-    def search(self, name):
-        try:
-            response = self.client.get(self.url, params=self._url_encode({ 'name': name }))
-            response = self._process_response(response)
-        
-        except TokenExpiredError:
-            self._renew_token()
-            response = self.search(name)
-        
-        return response
+
+    def __init__(self):
+        super(Campaign, self).__init__()
