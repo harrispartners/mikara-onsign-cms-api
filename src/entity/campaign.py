@@ -5,11 +5,16 @@ from src.entity.restriction import Restriction
 
 
 class Campaign(Playable):
-    category = graphene.String(required=True)
-    tags = graphene.List(graphene.NonNull(graphene.String), required=True)
-    isPaused = graphene.Boolean(required=True)
-    restrictions = graphene.List(graphene.NonNull(graphene.Field(Restriction)))
+    category = None
+    tags = None
+    isPaused = None
+    restrictions = None
 
 
-    def __init__(self):
-        super(Campaign, self).__init__()
+    def __init__(self, id, name, category, tags, isPaused, restrictions):
+        super(Campaign, self).__init__(id, name)
+        
+        self.category = category
+        self.tags = tags
+        self.isPaused = isPaused
+        self.restrictions = restrictions

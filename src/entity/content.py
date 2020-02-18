@@ -6,14 +6,31 @@ from types import *
 
 
 class Content(Playable):
-    kind = graphene.Field(graphene.NonNull(ContentKind))
-    lastModified = graphene.types.datetime.DateTime(required=True)
-    size = graphene.Int()
-    parentId = graphene.ID()
-    ancestorIds = graphene.List(graphene.NonNull(graphene.ID), required=True)
-    downloadURL = graphene.String()
-    children = graphene.Field(ContentConnection)
+    kind = None
+    lastModified = None
+    size = None
+    parentId = None
+    ancestorIds = None
+    downloadURL = None
+    children = None
     
 
-    def __init__(self):
-        super(Content, self).__init__()
+    def __init__(self,
+                 id,
+                 name,
+                 kind,
+                 lastModified,
+                 size,
+                 parentId,
+                 ancestorIds,
+                 downloadURL,
+                 children):
+        super(Content, self).__init__(id, name)
+        
+        self.kind = kind
+        self.lastModified = lastModified
+        self.size = size
+        self.parentId = parentId
+        self.ancestorIds = ancestorIds
+        self.downloadURL = downloadURL
+        self.children = children

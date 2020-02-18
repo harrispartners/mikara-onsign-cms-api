@@ -1,43 +1,34 @@
-from requests_oauthlib import OAuth2Session
-from oauthlib.oauth2 import BackendApplicationClient
+import urllib.parse
+import requests
 
 
 class OnSign:
     base_url = ''
-    client_id = ''
     client_secret = ''
-    token = ''
+    session = None
 
     def __init__(self, data):
         self.base_url = data['BASE_URL']
-        self.client_id = data['CLIENT_ID']
         self.client_secret = data['CLIENT_SECRET']
 
     def get_base_url(self):
         return self.base_url if self.base_url else False
 
-    def get_client_id(self):
-        return self.client_id if self.client_id else False
-
     def get_client_secret(self):
         return self.client_secret if self.client_secret else False
 
-    def get_token(self):
-        if not self.token:
-            token_url = self.base_url + '/authorize/access_token'
-            client = BackendApplicationClient(client_id=self.client_id)
-            oauth = OAuth2Session(client=client)
-            self.token = oauth.fetch_token(
-                token_url=token_url,
-                client_id=self.client_id,
-                client_secret=self.client_secret
-            )
+    def get_session(self):
+        if self.session is None:
+            self.session = requests.Session()
+            
+            self.session.headers.update({'Authorization': 'token {}'.format(self.client_secret),
+                                         'Content-type': 'application/json',
+                                         'Accept': 'text/plain'})
+        
+        return self.session
 
-        return self.token
-
-    def get_client(self):
-        return OAuth2Session(self.client_id, token=self.get_token())
+    def get_cookie(self):
+        return self.session.cookies['connect.sid'] if self.session else None
     
-    def clear_token(self):
-        self.token = ''
-
+    def clear_session(self):
+        self.session = None

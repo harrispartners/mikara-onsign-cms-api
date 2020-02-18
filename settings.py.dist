@@ -1,6 +1,5 @@
 # Main settings for examples
 
 [DEFAULT]
-BASE_URL = http://xibo_cms_url/api
-CLIENT_ID = application_client_id
-CLIENT_SECRET = application_client_secret
+BASE_URL = https://app.onsign.tv/graphql
+CLIENT_TOKEN = client_token
