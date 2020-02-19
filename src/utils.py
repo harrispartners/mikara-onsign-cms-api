@@ -4,6 +4,12 @@ import json
 def from_json(x, _type):
     return x if type(x) in [None, _type] else _type(**(json.loads(x) if type(x) is not dict else x))
     
+#def from_json_list(x, _type):
+#    if x is None:
+#        return None
+    
+    
+    
 def create_graphql_request(request_string,
                            is_request_query,
                            operation_name=None,

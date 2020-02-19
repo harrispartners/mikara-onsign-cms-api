@@ -12,5 +12,15 @@ factory = OnSignFactory({
     'CLIENT_SECRET': config.get('CLIENT_SECRET')
 })
 
-result = factory.get_entity('Organization').post(create_graphql_request("{ organization { id } }", True), Organization)
+query =\
+"""
+{
+    organization
+    {
+        id
+        players
+    }
+}
+"""
+result = factory.get_entity('Organization').post(create_graphql_request(query, True))
 print(result)

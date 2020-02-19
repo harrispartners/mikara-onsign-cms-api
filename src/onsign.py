@@ -23,7 +23,7 @@ class OnSign:
             
             self.session.headers.update({'Authorization': 'token {}'.format(self.client_secret),
                                          'Content-type': 'application/json',
-                                         'Accept': 'text/plain'})
+                                         'Accept': 'application/json'})
         
         return self.session
 

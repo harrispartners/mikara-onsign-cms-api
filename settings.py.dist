@@ -2,4 +2,4 @@
 
 [DEFAULT]
 BASE_URL = https://app.onsign.tv/graphql
-CLIENT_TOKEN = client_token
+CLIENT_SECRET = client_secret

@@ -1,7 +1,7 @@
 import graphene
 
 from src.entity.base_entity import BaseEntity
-'''from src.entity.player import Player
+from src.entity.player import Player
 from src.entity.playerconnection import PlayerConnection
 from src.entity.playergroup import PlayerGroup
 from src.entity.playergroups import PlayerGroupConnection
@@ -12,7 +12,7 @@ from src.entity.campaignconnection import CampaignConnection
 from src.entity.content import Content
 from src.entity.contentconnection import ContentConnection
 from src.entity.report import Report
-from src.entity.reportconnection import ReportConnection'''
+from src.entity.reportconnection import ReportConnection
 from src.types import *
 from src.utils import *
 
@@ -63,8 +63,6 @@ class Organization:
         self.campaign = from_json(campaign, Campaign)
         self.campaigns = from_json(campaigns, CampaignConnection)
         self.contentRoot = from_json(contentRoot, Content)
-        #if not self.contentRoot:
-        #    raise Exception("Required parameter 'contentRoot' was not given.")
         self.content = from_json(content, Content)
         self.contents = from_json(contents, ContentConnection)
         self.report = from_json(report, Report)

@@ -20,6 +20,6 @@ class OnSignFactory:
 
     def get_entity(self, _type):
         if _type in self.ENTITIES:
-            return BaseEntity(self.onsign)
+            return BaseEntity(self.onsign, self.ENTITIES[_type])
         else:
             raise ValueError('Entity "' + type + '" doesn\'t exists.')
