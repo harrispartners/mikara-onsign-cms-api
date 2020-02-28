@@ -1,15 +1,34 @@
-import graphene
+import json
 
-from src.entity.base_entity import BaseEntity
 from src.entity.playergroup import PlayerGroup
 from src.entity.pageinfo import PageInfo
 
 
-class PlayerGroupConnection(BaseEntity):
-    nodes = graphene.List(graphene.NonNull(graphene.Field(PlayerGroup)))
-    pageInfo = graphene.Field(PageInfo, required=True)
-    totalCount = graphene.Int(required=True)
+class PlayerGroupConnection:
+    nodes = None
+    pageInfo = None
+    totalCount = None
     
     
-    def __init__(self):
-        super(PlayerGroupConnection, self).__init__()
+    def __init__(self,
+                 nodes=None,
+                 pageInfo=None,
+                 totalCount=None):
+        if nodes:
+            self.nodes = [PlayerGroup(**x) for x in nodes]
+        
+        if pageInfo:
+            self.pageInfo = PageInfo(**pageInfo)
+        
+        if totalCount:
+            self.totalCount = totalCount
+    
+    
+    @staticmethod
+    def parse(json_data):
+        if type(json_data) is str:
+            json_data = json.loads(json_data)
+        
+        json_data = json_data['data']['organization']['playerGroups']
+        
+        return PlayerGroupConnection(**json_data)

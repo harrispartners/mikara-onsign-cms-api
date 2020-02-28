@@ -1,10 +1,7 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
 from src.entity.workinghours import WorkingHours
 from src.entity.playerloop import PlayerLoop
-from src.entity.playergroupconnection import PlayerGroupConnection
-from src.types import *
+#from src.entity.playergroupconnection import PlayerGroupConnection
+from src.utils import *
 
 
 class Player:
@@ -30,27 +27,27 @@ class Player:
     
     def __init__(self,
                  id,
-                 name,
-                 errorCount,
-                 lastSeen,
-                 lastSeenAgo,
-                 isConnected,
-                 syncProgress,
-                 signalStrength,
-                 timezone,
-                 utcOffset,
-                 workingHours,
-                 version,
-                 tags,
-                 attrs,
-                 updateRequested,
-                 updateReady,
-                 loop,
-                 playerGroups):
+                 name=None,
+                 errorCount=None,
+                 lastSeen=None,
+                 lastSeenAgo=None,
+                 isConnected=None,
+                 syncProgress=None,
+                 signalStrength=None,
+                 timezone=None,
+                 utcOffset=None,
+                 workingHours=None,
+                 version=None,
+                 tags=None,
+                 attrs=None,
+                 updateRequested=None,
+                 updateReady=None,
+                 loop=None,
+                 playerGroups=None):
         self.id = id
         self.name = name
         self.errorCount = errorCount
-        self.lastSeen = lastSeen
+        self.lastSeen = parseDateTimeString(lastSeen)
         self.lastSeenAgo = lastSeenAgo
         self.isConnected = isConnected
         self.syncProgress = syncProgress
@@ -63,5 +60,15 @@ class Player:
         self.attrs = attrs
         self.updateRequested = updateRequested
         self.updateReady = updateReady
-        self.loop = from_jsom(loop, PlayerLoop)
-        self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
+        self.loop = from_json(loop, PlayerLoop, Player)
+        #self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
+        
+        
+    @staticmethod
+    def parse(json_data):
+        if type(json_data) is str:
+            json_data = json.loads(json_data)   # Create into a json dict if it's not
+        
+        json_data = json_data['data']['organization']['player']
+        
+        return Player(**json_data)

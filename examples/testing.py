@@ -18,9 +18,73 @@ query =\
     organization
     {
         id
-        players
+        name
     }
 }
 """
 result = factory.get_entity('Organization').post(create_graphql_request(query, True))
-print(result)
+print(result.id)
+
+query =\
+"""
+{
+    organization
+    {
+        players(first: 100)
+        {
+            nodes
+            {
+                id
+                name
+                errorCount
+                lastSeen
+                lastSeenAgo
+                workingHours
+                {
+                    weekDays
+                    startTime
+                    endTime
+                }
+                tags
+                attrs
+                updateReady
+                updateRequested
+            }
+        }
+    }
+}
+"""
+result = factory.get_entity('PlayerConnection').post(create_graphql_request(query, True))
+print(result.nodes)
+print(result.nodes[0].name)
+print(result.nodes[0].workingHours[0].startTime)
+print(result.nodes[0].updateRequested)
+
+
+query =\
+"""
+{
+    organization
+    {
+        playerGroups(first: 100)
+        {
+            nodes
+            {
+                id
+                name
+                tags
+                players(first: 100) {
+                    nodes {
+                        id
+                        name
+                    }
+                    totalCount
+                }
+            }
+        }
+    }
+}
+"""
+result = factory.get_entity('PlayerGroupConnection').post(create_graphql_request(query, True))
+print(result.nodes)
+print(result.nodes[0].name)

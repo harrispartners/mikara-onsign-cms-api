@@ -14,8 +14,8 @@ class BaseEntity:
     def post(self, query_json):
         try:
             response = self.client.post(self.url, json=query_json)
-            response = self._process_response(response)["data"][self._type.__name__.lower()]
-            print(response)
+            #response = self._process_response(response)["data"][self._type.__name__.lower()]
+            response = getattr(self._type, 'parse')(self._process_response(response))
         
         except TokenExpiredError:
             self._renew_token()
@@ -25,9 +25,15 @@ class BaseEntity:
 
     def _raise_exception(self, response):
         json_data = response.json()
-        if 'error' in json_data:
-            code = str(json_data['error']['code'])
-            raise Exception('OmmaSign error ' + code + ' occured: ' + json_data['error']['message'])
+        print(json_data)
+        if 'errors' in json_data:
+            if 'message' in json_data['errors'][0]:
+                message = str(json_data['errors'][0]['message'])
+            else:
+                message = json_data['errors'][0]['extensions']['code'] + \
+                            ' at ' + \
+                            str(json_data['errors'][0]['locations'][0])
+            raise Exception('OnSign error occurred: ' + message + '.')
         else:
             response.raise_for_status()
             

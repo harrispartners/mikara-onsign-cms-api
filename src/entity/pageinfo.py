@@ -1,12 +1,7 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
-
-
-class PageInfo(BaseEntity):
-    endCursor = graphene.String()
-    hasNextPage = graphene.Boolean()
+class PageInfo:
+    endCursor = None
+    hasNextPage = None
     
-    
-    def __init__(self):
-        super(PageInfo, self).__init__()
+    def __init__(self, endCursor, hasNextPage):
+        self.endCursor = endCursor
+        self.hasNextPage = hasNextPage

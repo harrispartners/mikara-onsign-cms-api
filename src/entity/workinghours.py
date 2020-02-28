@@ -1,13 +1,13 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
+from src.utils import *
 
 
-class WorkingHours(BaseEntity):
-    weekDays = graphene.List(graphene.NonNull(graphene.Int), required=True)
-    startTime = graphene.types.datetime.Time(required=True)
-    endTime = graphene.types.datetime.Time(required=True)
-
-
-    def __init__(self):
-        super(WorkingHours, self).__init__()
+class WorkingHours:
+    weekDays = None
+    startTime = None
+    endTime = None
+    
+    
+    def __init__(self, weekDays, startTime, endTime):
+        self.weekDays = weekDays
+        self.startTime = parseTimeString(startTime)
+        self.endTime = parseTimeString(endTime)
