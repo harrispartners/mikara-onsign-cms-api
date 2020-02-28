@@ -1,9 +1,6 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
 
 
-class Playable(BaseEntity):
+class Playable:
     id = None
     name = None
     

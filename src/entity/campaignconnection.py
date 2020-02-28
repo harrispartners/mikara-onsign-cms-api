@@ -1,15 +1,35 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
-from campaign import Campaign
-from pageinfo import PageInfo
+from src.entity.campaign import Campaign
+from src.entity.pageinfo import PageInfo
 
 
-class CampaignConnection(BaseEntity):
-    nodes = graphene.List(graphene.NonNull(graphene.Field(Campaign)))
-    pageInfo = graphene.Field(PageInfo, required=True)
-    totalCount = graphene.Int(required=True)
-
-
-    def __init__(self):
-        super(CampaignConnection, self).__init__()
+class CampaignConnection:
+    nodes = None
+    pageInfo = None
+    totalCount = None
+    
+    
+    def __init__(self,
+                 nodes=None,
+                 pageInfo=None,
+                 totalCount=None):
+        if nodes:
+            self.nodes = [Campaign(**x) for x in nodes]
+        
+        if pageInfo:
+            self.pageInfo = PageInfo(**pageInfo)
+        
+        if totalCount:
+            self.totalCount = totalCount
+    
+    
+    @staticmethod
+    def parse(json_data):
+        if json_data is None:
+            return None
+        
+        if type(json_data) is str:
+            json_data = json.loads(json_data)
+        
+        json_data = json_data['data']['organization']['campaigns']
+        
+        return CampaignConnection(**json_data)

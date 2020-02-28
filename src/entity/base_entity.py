@@ -14,8 +14,8 @@ class BaseEntity:
     def post(self, query_json):
         try:
             response = self.client.post(self.url, json=query_json)
-            #response = self._process_response(response)["data"][self._type.__name__.lower()]
-            response = getattr(self._type, 'parse')(self._process_response(response))
+            response = self._process_response(response)
+            response = getattr(self._type, 'parse')(response)
         
         except TokenExpiredError:
             self._renew_token()

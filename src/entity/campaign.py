@@ -1,7 +1,7 @@
-import graphene
-
 from src.entity.playable import Playable
-from src.entity.restriction import Restriction
+#from src.entity.restriction import Restriction
+
+from src.utils import *
 
 
 class Campaign(Playable):
@@ -11,10 +11,29 @@ class Campaign(Playable):
     restrictions = None
 
 
-    def __init__(self, id, name, category, tags, isPaused, restrictions):
+    def __init__(self,
+                 id,
+                 name,
+                 category,
+                 tags,
+                 isPaused,
+                 restrictions):
         super(Campaign, self).__init__(id, name)
         
         self.category = category
-        self.tags = tags
+        self.tags = from_json_list(tags, str)
         self.isPaused = isPaused
-        self.restrictions = restrictions
+        self.restrictions = from_json_list(restrictions, Restriction)
+    
+    
+    @staticmethod
+    def parse(json_data):
+        if json_data is None:
+            return None
+    
+        if type(json_data) is str:
+            json_data = json.loads(json_data)   # Create into a json dict if it's not
+        
+        json_data = json_data['data']['organization']['campaign']
+        
+        return Campaign(**json_data)

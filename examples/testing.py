@@ -12,6 +12,49 @@ factory = OnSignFactory({
     'CLIENT_SECRET': config.get('CLIENT_SECRET')
 })
 
+
+query =\
+"""
+{
+    organization
+    {
+        id
+        name
+        players(first: 100)
+        {
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
+            nodes {
+              id
+              lastSeen
+            }
+            totalCount
+        }
+    }
+}
+"""
+query =\
+"""
+{
+    organization
+    {
+        id
+        player(id: "8BCYV14")
+        {
+            id
+            name
+        }
+    }
+}
+"""
+result = factory.get_entity('Player').post(create_graphql_request(query, True))
+print(result.name)
+exit(0)
+
+
+
 query =\
 """
 {

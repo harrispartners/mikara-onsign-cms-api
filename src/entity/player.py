@@ -1,6 +1,6 @@
 from src.entity.workinghours import WorkingHours
 from src.entity.playerloop import PlayerLoop
-#from src.entity.playergroupconnection import PlayerGroupConnection
+from src.entity.playergroupconnection import PlayerGroupConnection
 from src.utils import *
 
 
@@ -61,11 +61,14 @@ class Player:
         self.updateRequested = updateRequested
         self.updateReady = updateReady
         self.loop = from_json(loop, PlayerLoop, Player)
-        #self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
+        self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
         
         
     @staticmethod
     def parse(json_data):
+        if json_data is None:
+            return None
+    
         if type(json_data) is str:
             json_data = json.loads(json_data)   # Create into a json dict if it's not
         

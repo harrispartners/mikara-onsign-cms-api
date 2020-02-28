@@ -26,6 +26,9 @@ class PlayerConnection:
     
     @staticmethod
     def parse(json_data):
+        if json_data is None:
+            return None
+        
         if type(json_data) is str:
             json_data = json.loads(json_data)   # Create into a json dict if it's not
         

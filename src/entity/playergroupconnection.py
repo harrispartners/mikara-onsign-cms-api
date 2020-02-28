@@ -26,6 +26,9 @@ class PlayerGroupConnection:
     
     @staticmethod
     def parse(json_data):
+        if json_data is None:
+            return None
+        
         if type(json_data) is str:
             json_data = json.loads(json_data)
         

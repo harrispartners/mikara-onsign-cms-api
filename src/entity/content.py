@@ -1,8 +1,7 @@
-import graphene
-
 from src.entity.playable import Playable
-from src.entity.contentconnection import ContentConnection
-from types import *
+#from src.entity.restriction import Restriction
+
+from src.utils import *
 
 
 class Content(Playable):
@@ -28,9 +27,22 @@ class Content(Playable):
         super(Content, self).__init__(id, name)
         
         self.kind = kind
-        self.lastModified = lastModified
+        self.lastModified = parseDateTimeString(lastModified)
         self.size = size
         self.parentId = parentId
-        self.ancestorIds = ancestorIds
+        self.ancestorIds = from_json_list(ancestorIds, int)
         self.downloadURL = downloadURL
-        self.children = children
+        #self.children = children
+    
+    
+    @staticmethod
+    def parse(json_data):
+        if json_data is None:
+            return None
+        
+        if type(json_data) is str:
+            json_data = json.loads(json_data)
+        
+        json_data = json_data['data']['organization']['content']
+        
+        return Content(**json_data)
