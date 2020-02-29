@@ -24,7 +24,6 @@ def from_json(data, _type, _subtype=None):
         
     if _subtype is not None:
         data['_subtype'] = _subtype.__name__
-    print(data)
         
     return _type(**data)
 
@@ -34,6 +33,7 @@ def from_json_list(data, _type):
         return None
     
     return [from_json(x, _type) for x in data]
+    
     
 def create_graphql_request(request_string,
                            is_request_query,

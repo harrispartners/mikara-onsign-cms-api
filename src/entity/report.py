@@ -1,3 +1,4 @@
+import json
 
 
 class Report:
@@ -28,6 +29,10 @@ class Report:
         self.notificationEmails = notificationEmails
         self.playerTags = playerTags
         self.players = players
+    
+    
+    def __str__(self):
+        return str(self.__dict__)
     
     
     @staticmethod

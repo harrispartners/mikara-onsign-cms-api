@@ -1,5 +1,6 @@
 from src.onsign import OnSign
 from src.entity.base_entity import BaseEntity
+from src.entity.ratelimit import RateLimit
 from src.entity.organization import Organization
 from src.entity.player import Player
 from src.entity.playerconnection import PlayerConnection
@@ -17,6 +18,7 @@ from src.entity.reportconnection import ReportConnection
 
 class OnSignFactory:
     ENTITIES = {
+        'RateLimit': RateLimit,
         'Organization': Organization,
         'Player': Player,
         'PlayerConnection': PlayerConnection,

@@ -62,6 +62,10 @@ class Player:
         self.updateReady = updateReady
         self.loop = from_json(loop, PlayerLoop, Player)
         self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
+    
+    
+    def __str__(self):
+        return str(self.__dict__)
         
         
     @staticmethod

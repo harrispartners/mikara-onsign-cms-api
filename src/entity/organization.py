@@ -51,19 +51,23 @@ class Organization:
                  reports=None):
         self.id = id
         self.name = name
-        self.player = Player(**player) if player is not None else None
-        self.players = PlayerConnection(**players) if players is not None else None
-        self.playerGroup = PlayerGroup(**playerGroup) if playerGroup is not None else None
-        self.playerGroups = PlayerGroupConnection(**playerGroups) if playerGroups is not None else None
-        self.playlist = Playlist(**playlist) if playlist is not None else None
-        self.playlists = PlaylistConnection(**playlists) if playlists is not None else None
-        self.campaign = Campaign(**campaign) if campaign is not None else None
-        self.campaigns = CampaignConnection(**campaigns) if campaigns is not None else None
-        self.contentRoot = Content(**contentRoot) if contentRoot is not None else None
-        self.content = Content(**content) if content is not None else None
-        self.contents = ContentConnection(**contents) if contents is not None else None
-        self.report = Report(**report) if report is not None else None
-        self.reports = ReportConnection(**reports) if reports is not None else None
+        self.player = Player(**player) if player else None
+        self.players = PlayerConnection(**players) if players else None
+        self.playerGroup = PlayerGroup(**playerGroup) if playerGroup else None
+        self.playerGroups = PlayerGroupConnection(**playerGroups) if playerGroups else None
+        self.playlist = Playlist(**playlist) if playlist else None
+        self.playlists = PlaylistConnection(**playlists) if playlists else None
+        self.campaign = Campaign(**campaign) if campaign else None
+        self.campaigns = CampaignConnection(**campaigns) if campaigns else None
+        self.contentRoot = Content(**contentRoot) if contentRoot else None
+        self.content = Content(**content) if content else None
+        self.contents = ContentConnection(**contents) if contents else None
+        self.report = Report(**report) if report else None
+        self.reports = ReportConnection(**reports) if reports else None
+    
+    
+    def __str__(self):
+        return str(self.__dict__)
         
         
     @staticmethod

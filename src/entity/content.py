@@ -35,6 +35,10 @@ class Content(Playable):
         #self.children = children
     
     
+    def __str__(self):
+        return str(self.__dict__)
+    
+    
     @staticmethod
     def parse(json_data):
         if json_data is None:

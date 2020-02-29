@@ -1,5 +1,6 @@
 from src.entity.playable import Playable
-#from src.entity.restriction import Restriction
+from src.entity.restriction import Restriction
+from src.entity.campaign import Campaign
 from src.utils import *
 
 
@@ -24,8 +25,12 @@ class Playlist(Playable):
         self.category = category
         self.tags = from_json_list(tags, str)
         self.isPaused = isPaused
-        #self.restrictions = from_json_list(restrictions, Restriction)
-        #self.items = 
+        self.restrictions = from_json_list(restrictions, Restriction)
+        self.items = from_json_list(items, Campaign)
+    
+    
+    def __str__(self):
+        return str(self.__dict__)
     
     
     @staticmethod

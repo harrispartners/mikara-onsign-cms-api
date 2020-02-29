@@ -26,6 +26,10 @@ class Campaign(Playable):
         self.restrictions = from_json_list(restrictions, Restriction)
     
     
+    def __str__(self):
+        return str(self.__dict__)
+    
+    
     @staticmethod
     def parse(json_data):
         if json_data is None:

@@ -24,6 +24,10 @@ class PlayerGroup:
         self.players = players
     
     
+    def __str__(self):
+        return str(self.__dict__)
+    
+    
     @staticmethod
     def parse(json_data):
         if type(json_data) is str:

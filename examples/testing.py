@@ -50,7 +50,7 @@ query =\
 }
 """
 result = factory.get_entity('Player').post(create_graphql_request(query, True))
-print(result.name)
+print(result)
 exit(0)
 
 

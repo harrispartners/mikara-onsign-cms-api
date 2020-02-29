@@ -1,16 +1,29 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
+from src.utils import *
 
 
-class CalendarRestriction(BaseEntity):
-    weekDays = graphene.List(graphene.NonNull(graphene.Int))
-    startTime = graphene.types.datetime.Time(required=True)
-    endTime = graphene.types.datetime.Time(required=True)
-    startDate = graphene.types.datetime.Date()
-    endDate = graphene.types.datetime.Date()
-    isEndStrict = graphene.Boolean(required=True)
+class CalendarRestriction:
+    weekDays = None
+    startTime = None
+    endTime = None
+    startDate = None
+    endDate = None
+    isEndStrict = None
 
 
-    def __init__(self):
-        super(CalendarRestriction, self).__init__()
+    def __init__(self,
+                 weekDays,
+                 startTime,
+                 endTime,
+                 startDate,
+                 endDate,
+                 isEndStrict):
+        self.weekDays = from_json_list(weekDays, int)
+        self.startTime = parseTimeString(startTime)
+        self.endTime = parseTimeString(endTime)
+        self.startDate = parseDateTimeString(startDate)
+        self.endDate = parseDateTimeString(endDate)
+        self.isEndStrict = isEndStrict
+    
+    
+    def __str__(self):
+        return str(self.__dict__)

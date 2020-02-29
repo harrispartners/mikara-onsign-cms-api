@@ -1,13 +1,17 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
-from src.types import *
+from src.utils import *
 
 
-class TagRestriction(BaseEntity):
-    tags = graphene.List(graphene.NonNull(graphene.String), required=True)
-    action = graphene.Field(TagRestrictionActions, required=True)
+class TagRestriction:
+    tags = None
+    action = None
 
 
-    def __init__(self):
-        super(TagRestriction, self).__init__()
+    def __init__(self,
+                 tags,
+                 action):
+        self.tags = from_json_list(tags, str)
+        self.action = from_json(action, str)
+    
+    
+    def __str__(self):
+        return str(self.__dict__)

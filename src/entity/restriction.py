@@ -1,17 +1,23 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
 from src.entity.calendarrestriction import CalendarRestriction
 from src.entity.geographicregion import GeographicRegion
 from src.entity.tagrestriction import TagRestriction
-from src.types import *
+from src.utils import *
 
 
-class Restriction(BaseEntity):
-    calendar = graphene.Field(CalendarRestriction)
-    geographic = graphene.List(graphene.NonNull(graphene.Field(GeographicRegion)))
-    tag = graphene.Field(TagRestriction)
+class Restriction:
+    calendar = None
+    geographic = None
+    tag = None
     
     
-    def __init__(self):
-        super(Restriction, self).__init__()
+    def __init__(self,
+                 calendar=None,
+                 geographic=None,
+                 tag=None):
+        self.calendar = from_json(calendar, CalendarRestriction)
+        self.geographic = from_json_list(geographic, GeographicRegion)
+        self.tag = from_json(tag, TagRestriction)
+    
+    
+    def __str__(self):
+        return str(self.__dict__)

@@ -1,11 +1,12 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
 
 
-class GeographicRegion(BaseEntity):
-    id = graphene.ID(required=True)
+class GeographicRegion:
+    id = None
     
     
-    def __init__(self):
-        super(GeographicRegion, self).__init__()
+    def __init__(self, id):
+        self.id = id
+    
+    
+    def __str__(self):
+        return str(self.__dict__)
