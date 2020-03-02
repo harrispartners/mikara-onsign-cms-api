@@ -19,7 +19,87 @@ factory = OnSignFactory({
     organization {
         id
         name
-        players(first: 100) {
+        
+      playerGroups(first:100) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes{
+          id
+          name
+          tags
+          loop(name:PRIMARY){
+            id
+            kind
+            items(first:100){
+              edges{
+                id
+                isPaused
+              }
+            }
+          }
+          players(first: 100){
+            pageInfo{
+              endCursor
+              hasNextPage
+            }
+            totalCount
+            nodes {
+              id
+              name
+              isConnected
+            }
+          }
+        }
+      }
+    }
+}
+"""'''
+
+'''query = \
+"""
+{
+    organization {
+      id
+      name
+      
+    }
+}
+"""'''
+
+'''query = \
+"""
+{
+  organization {
+    id
+    name
+    
+  }
+}
+"""'''
+
+query = \
+"""
+{
+  organization {
+    id
+    name
+    
+  }
+}
+
+"""
+
+query = \
+"""
+{
+  organization {
+    id
+    name
+    
+    players(first: 100) {
             nodes {
               id
               name
@@ -74,51 +154,7 @@ factory = OnSignFactory({
               }
             }
         }
-      playerGroups(first:100) {
-        totalCount
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        nodes{
-          id
-          name
-          tags
-          loop(name:PRIMARY){
-            id
-            kind
-            items(first:100){
-              edges{
-                id
-                isPaused
-              }
-            }
-          }
-          players(first: 100){
-            pageInfo{
-              endCursor
-              hasNextPage
-            }
-            totalCount
-            nodes {
-              id
-              name
-              isConnected
-            }
-          }
-        }
-      }
-    }
-}
-"""'''
-
-'''query = \
-"""
-{
-    organization {
-      id
-      name
-      playerGroups(first:100) {
+    playerGroups(first:100) {
         pageInfo {
           hasNextPage
           endCursor
@@ -141,16 +177,6 @@ factory = OnSignFactory({
           }
         }
       }
-    }
-}
-"""'''
-
-'''query = \
-"""
-{
-  organization {
-    id
-    name
     playlists(first: 100) {
       pageInfo {
         hasNextPage
@@ -174,16 +200,6 @@ factory = OnSignFactory({
         }
       }
     }
-  }
-}
-"""'''
-
-query = \
-"""
-{
-  organization {
-    id
-    name
     campaigns(first: 100) {
       pageInfo {
         hasNextPage
@@ -204,17 +220,6 @@ query = \
         }
       }
     }
-  }
-}
-
-"""
-
-query = \
-"""
-{
-  organization {
-    id
-    name
     contentRoot {
       id
       name
@@ -226,21 +231,37 @@ query = \
         }
       }
     }
+    contents(first: 100) {
+        nodes {
+            id
+            name
+        }
+    }
+    reports(first: 100) {
+        nodes {
+            id
+            __typename
+        }
+    }
   }
 }
 """
 
 result = factory.get_entity('Organization').post(create_graphql_request(query, True))
 print(result)
-#print(result.players.nodes[0])
-#print(result.players.nodes[0].workingHours)
-#print(result.players.nodes[0].loop.items.edges[0])
-
-#print(result.playerGroups.nodes[0])
-#print(result.playerGroups.nodes[0].players.nodes[0])
-
-#print(result.playlists.nodes[0])
-
-#print(result.campaigns.nodes[0])
-
+print(result.players.nodes[0])
+print(result.players.nodes[0].workingHours)
+print(result.players.nodes[0].loop.items.edges[0])
+print()
+print(result.playerGroups.nodes[0])
+print(result.playerGroups.nodes[0].players.nodes[0])
+print()
+print(result.playlists.nodes[0])
+print()
+print(result.campaigns.nodes[0])
+print()
 print(result.contentRoot.children.nodes[0])
+print()
+print(result.contents.nodes[1])
+print()
+print(result.reports.nodes[0])

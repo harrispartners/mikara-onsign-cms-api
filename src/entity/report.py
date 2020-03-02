@@ -48,4 +48,14 @@ class Report:
         
         json_data = json_data['data']['organization']['report']
         
-        return Report(**json_data)
+        from singlecampaignreport import SingleCampaignReport
+        from singlemediareport import SingleMediaReport
+        from recurringcampaignreport import RecurringCampaignReport
+        from recurringmediareport import RecurringMediaReport
+        
+        if '__typename' in json_data:
+            klass = locals()[json_data['__typename']]
+        else:
+            klass = Report
+        
+        return klass(**json_data)

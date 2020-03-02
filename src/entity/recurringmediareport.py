@@ -1,22 +1,60 @@
-import graphene
-
 from src.entity.report import Report
-from src.entity.contentconnection import ContentConnection
-from src.types import *
+from src.utils import *
 
 
 class RecurringMediaReport(Report):
-    showOnlyViewerInteractions = graphene.Boolean(required=True)
-    includePartialPlayback = graphene.Boolean(required=True)
-    media = graphene.Field(ContentConnection)
-    name = graphene.String(required=True)
-    schedule = graphene.String(required=True)
-    periodAmount = graphene.Int(required=True)
-    periodType = graphene.Field(ReportPeriodType, required=True)
-    periodOffsetDays = graphene.Int(required=True)
-    nextRecurrence = graphene.types.datetime.Date()
-    savedReports = graphene.Field(ContentConnection)
+    showOnlyViewerInteractions = None
+    includePartialPlayback = None
+    media = None
+    name = None
+    schedule = None
+    periodAmount = None
+    periodType = None
+    periodOffsetDays = None
+    nextRecurrence = None
+    savedReports = None
     
     
-    def __init__(self):
-        super(RecurringMediaReport, self).__init__()
+    def __init__(self,
+                 id,
+                 contentType=None,
+                 periodicity=None,
+                 aggregation=None,
+                 format=None,
+                 notificationEmails=None,
+                 playerTags=None,
+                 players=None,
+                 showOnlyViewerInteractions=None,
+                 includePartialPlayback=None,
+                 media=None,
+                 name=None,
+                 schedule=None,
+                 periodAmount=None,
+                 periodType=None,
+                 periodOffsetDays=None,
+                 nextRecurrence=None,
+                 savedReports=None):
+        super(RecurringMediaReport, self).__init__(id,
+                                                   contentType,
+                                                   periodicity,
+                                                   aggregation,
+                                                   format,
+                                                   notificationEmails,
+                                                   playerTags,
+                                                   players)
+        
+        self.showOnlyViewerInteractions = showOnlyViewerInteractions
+        self.includePartialPlayback = includePartialPlayback
+        from src.entity.contentconnection import ContentConnection
+        self.media = from_json(media, ContentConnection)
+        self.name = name
+        self.schedule = schedule
+        self.periodAmount = periodAmount
+        self.periodType = periodType
+        self.periodOffsetDays = periodOffsetDays
+        self.nextRecurrence = nextRecurrence
+        self.savedReports = from_json(savedReports, ContentConnection)
+    
+    
+    def __str__(self):
+        return str(self.__dict__)

@@ -1,19 +1,49 @@
-import graphene
-
 from src.entity.report import Report
-from src.entity.contentconnection import ContentConnection
-from src.entity.content import Content
-from src.types import *
+from src.utils import *
 
 
 class SingleMediaReport(Report):
-    showOnlyViewerInteractions = graphene.Boolean(required=True)
-    includePartialPlayback = graphene.Boolean(required=True)
-    media = graphene.Field(ContentConnection)
-    periodStart = graphene.types.datetime.DateTime(required=True)
-    periodEnd = graphene.types.datetime.DateTime(required=True)
-    savedReport = graphene.Field(Content)
+    showOnlyViewerInteractions = None
+    includePartialPlayback = None
+    media = None
+    periodStart = None
+    periodEnd = None
+    savedReport = None
     
     
-    def __init__(self):
-        super(SingleMediaReport, self).__init__()
+    def __init__(self,
+                 id,
+                 contentType=None,
+                 periodicity=None,
+                 aggregation=None,
+                 format=None,
+                 notificationEmails=None,
+                 playerTags=None,
+                 players=None,
+                 showOnlyViewerInteractions=None,
+                 includePartialPlayback=None,
+                 media=None,
+                 periodStart=None,
+                 periodEnd=None,
+                 savedReport=None):
+        super(SingleMediaReport, self).__init__(id,
+                                                contentType,
+                                                periodicity,
+                                                aggregation,
+                                                format,
+                                                notificationEmails,
+                                                playerTags,
+                                                players)
+        
+        self.showOnlyViewerInteractions = showOnlyViewerInteractions
+        self.includePartialPlayback = includePartialPlayback
+        from src.entity.contentconnection import ContentConnection
+        self.media = from_json(media, ContentConnection)
+        self.periodStart = parseDateTimeString(periodStart)
+        self.periodEnd = parseDateTimeString(periodEnd)
+        from src.entity.content import Content
+        self.savedReport = from_json(savedReport, Content)
+    
+    
+    def __str__(self):
+        return str(self.__dict__)
