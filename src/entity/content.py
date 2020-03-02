@@ -1,6 +1,4 @@
 from src.entity.playable import Playable
-from src.entity.contentconnection import ContentConnection
-
 from src.utils import *
 
 
@@ -16,14 +14,14 @@ class Content(Playable):
     
     def __init__(self,
                  id,
-                 name,
-                 kind,
-                 lastModified,
-                 size,
-                 parentId,
-                 ancestorIds,
-                 downloadURL,
-                 children):
+                 name=None,
+                 kind=None,
+                 lastModified=None,
+                 size=None,
+                 parentId=None,
+                 ancestorIds=None,
+                 downloadURL=None,
+                 children=None):
         super(Content, self).__init__(id, name)
         
         self.kind = kind
@@ -32,6 +30,7 @@ class Content(Playable):
         self.parentId = parentId
         self.ancestorIds = from_json_list(ancestorIds, int)
         self.downloadURL = downloadURL
+        from src.entity.contentconnection import ContentConnection
         self.children = from_json(children, ContentConnection)
     
     

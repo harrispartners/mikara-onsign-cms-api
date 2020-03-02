@@ -1,10 +1,5 @@
 from src.entity.workinghours import WorkingHours
 from src.entity.playerloop import PlayerLoop
-try:
-    # This prevents circular reference
-    from src.entity.playergroupconnection import PlayerGroupConnection
-except ImportError:
-    pass
 from src.utils import *
 
 
@@ -65,10 +60,8 @@ class Player:
         self.updateRequested = updateRequested
         self.updateReady = updateReady
         self.loop = from_json(loop, PlayerLoop)
-        try:
-            self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
-        except NameError:
-            self.playerGroups = None
+        from src.entity.playergroupconnection import PlayerGroupConnection
+        self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
     
     
     def __str__(self):

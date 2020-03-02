@@ -1,4 +1,3 @@
-from src.entity.content import Content
 from src.entity.pageinfo import PageInfo
 
 
@@ -13,6 +12,7 @@ class ContentConnection:
                  pageInfo=None,
                  totalCount=None):
         if nodes:
+            from src.entity.content import Content
             self.nodes = [Content(**x) for x in nodes]
         
         if pageInfo:

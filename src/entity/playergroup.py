@@ -1,5 +1,4 @@
 from src.entity.playerloop import PlayerLoop
-from src.entity.playerconnection import PlayerConnection
 from src.utils import *
 
 
@@ -21,6 +20,7 @@ class PlayerGroup:
         self.name = name
         self.tags = from_json_list(tags, str)
         self.loop = from_json(loop, PlayerLoop)
+        from src.entity.playerconnection import PlayerConnection
         self.players = from_json(players, PlayerConnection)
     
     

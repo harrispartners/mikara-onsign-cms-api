@@ -1,6 +1,5 @@
 import json
 
-from src.entity.playlist import Playlist
 from src.entity.pageinfo import PageInfo
 
 
@@ -15,6 +14,7 @@ class PlaylistConnection:
                  pageInfo=None,
                  totalCount=None):
         if nodes:
+            from src.entity.playlist import Playlist
             self.nodes = [Playlist(**x) for x in nodes]
         
         if pageInfo:

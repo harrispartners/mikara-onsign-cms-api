@@ -1,5 +1,7 @@
 import json
 
+from src.utils import *
+
 
 class Report:
     id = None
@@ -14,21 +16,22 @@ class Report:
     
     def __init__(self,
                  id,
-                 contentType,
-                 periodicity,
-                 aggregation,
-                 format,
-                 notificationEmails,
-                 playerTags,
-                 players):
+                 contentType=None,
+                 periodicity=None,
+                 aggregation=None,
+                 format=None,
+                 notificationEmails=None,
+                 playerTags=None,
+                 players=None):
         self.id = id
         self.contentType = contentType
         self.periodicity = periodicity
         self.aggregation = aggregation
         self.format = format
-        self.notificationEmails = notificationEmails
-        self.playerTags = playerTags
-        self.players = players
+        self.notificationEmails = from_json_list(notificationEmails, str)
+        self.playerTags = from_json_list(playerTags, str)
+        from src.entity.playerconnection import PlayerConnection
+        self.players = from_json(players, PlayerConnection)
     
     
     def __str__(self):

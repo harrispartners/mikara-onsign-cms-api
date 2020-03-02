@@ -219,6 +219,12 @@ query = \
       id
       name
       kind
+      children(first:100) {
+        nodes{
+          id
+          name
+        }
+      }
     }
   }
 }
@@ -237,4 +243,4 @@ print(result)
 
 #print(result.campaigns.nodes[0])
 
-print(result.contentRoot)
+print(result.contentRoot.children.nodes[0])

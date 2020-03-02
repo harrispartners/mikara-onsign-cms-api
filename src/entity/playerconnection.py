@@ -1,6 +1,5 @@
 import json
 
-from src.entity.player import Player
 from src.entity.pageinfo import PageInfo
 
 
@@ -15,6 +14,7 @@ class PlayerConnection:
                  pageInfo=None,
                  totalCount=None):
         if nodes:
+            from src.entity.player import Player
             self.nodes = [Player(**x) for x in nodes]
         
         if pageInfo:

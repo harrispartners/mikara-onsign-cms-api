@@ -1,4 +1,3 @@
-from src.entity.campaign import Campaign
 from src.entity.pageinfo import PageInfo
 
 
@@ -13,6 +12,7 @@ class CampaignConnection:
                  pageInfo=None,
                  totalCount=None):
         if nodes:
+            from src.entity.campaign import Campaign
             self.nodes = [Campaign(**x) for x in nodes]
         
         if pageInfo:

@@ -1,6 +1,5 @@
 import json
 
-from src.entity.playergroup import PlayerGroup
 from src.entity.pageinfo import PageInfo
 
 
@@ -15,6 +14,7 @@ class PlayerGroupConnection:
                  pageInfo=None,
                  totalCount=None):
         if nodes:
+            from src.entity.playergroup import PlayerGroup
             self.nodes = [PlayerGroup(**x) for x in nodes]
         
         if pageInfo:

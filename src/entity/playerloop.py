@@ -11,7 +11,6 @@ class PlayerLoop:
     def __init__(self, id, kind=None, items=None):
         self.id = id
         self.kind = kind
-        print(items)
         self.items = from_json(items, PlaylistItemConnection)
     
     

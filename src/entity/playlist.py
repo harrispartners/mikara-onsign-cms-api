@@ -1,6 +1,5 @@
 from src.entity.playable import Playable
 from src.entity.restriction import Restriction
-from src.entity.playlistitemconnection import PlaylistItemConnection
 from src.utils import *
 
 
@@ -26,6 +25,7 @@ class Playlist(Playable):
         self.tags = from_json_list(tags, str)
         self.isPaused = isPaused
         self.restrictions = from_json_list(restrictions, Restriction)
+        from src.entity.playlistitemconnection import PlaylistItemConnection
         self.items = from_json(items, PlaylistItemConnection)
     
     
