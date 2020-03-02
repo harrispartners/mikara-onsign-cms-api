@@ -1,6 +1,5 @@
 from src.entity.playable import Playable
-#from src.entity.restriction import Restriction
-
+from src.entity.restriction import Restriction
 from src.utils import *
 
 
@@ -13,11 +12,11 @@ class Campaign(Playable):
 
     def __init__(self,
                  id,
-                 name,
-                 category,
-                 tags,
-                 isPaused,
-                 restrictions):
+                 name=None,
+                 category=None,
+                 tags=None,
+                 isPaused=None,
+                 restrictions=None):
         super(Campaign, self).__init__(id, name)
         
         self.category = category

@@ -1,5 +1,5 @@
 from src.entity.playable import Playable
-#from src.entity.restriction import Restriction
+from src.entity.contentconnection import ContentConnection
 
 from src.utils import *
 
@@ -13,7 +13,7 @@ class Content(Playable):
     downloadURL = None
     children = None
     
-
+    
     def __init__(self,
                  id,
                  name,
@@ -32,7 +32,7 @@ class Content(Playable):
         self.parentId = parentId
         self.ancestorIds = from_json_list(ancestorIds, int)
         self.downloadURL = downloadURL
-        #self.children = children
+        self.children = from_json(children, ContentConnection)
     
     
     def __str__(self):

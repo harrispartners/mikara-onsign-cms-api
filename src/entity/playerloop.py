@@ -1,4 +1,4 @@
-from src.entity.playlists import Playlists
+from src.entity.playlistitemconnection import PlaylistItemConnection
 from src.utils import *
 
 
@@ -8,7 +8,12 @@ class PlayerLoop:
     items = None
     
     
-    def __init__(self, id, kind, items):
+    def __init__(self, id, kind=None, items=None):
         self.id = id
         self.kind = kind
-        self.items = from_json_list(items, Playlists)
+        print(items)
+        self.items = from_json(items, PlaylistItemConnection)
+    
+    
+    def __str__(self):
+        return str(self.__dict__)

@@ -7,8 +7,8 @@ class TagRestriction:
 
 
     def __init__(self,
-                 tags,
-                 action):
+                 tags=None,
+                 action=None):
         self.tags = from_json_list(tags, str)
         self.action = from_json(action, str)
     

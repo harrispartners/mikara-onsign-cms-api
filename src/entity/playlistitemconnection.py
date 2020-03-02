@@ -1,16 +1,22 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
 from src.entity.playlistitem import PlaylistItem
 from src.entity.pageinfo import PageInfo
-from src.types import *
+from src.utils import *
 
 
-class PlaylistItemConnection(BaseEntity):
-    edges = graphene.List(graphene.NonNull(graphene.Field(PlaylistItem)))
-    pageInfo = graphene.Field(PageInfo, required=True)
-    totalCount = graphene.Int(required=True)
+class PlaylistItemConnection:
+    edges = None
+    pageInfo = None
+    totalCount = None
     
     
-    def __init__(self):
-        super(PlaylistItemConnection, self).__init__()
+    def __init__(self,
+                 edges=None,
+                 pageInfo=None,
+                 totalCount=None):
+        self.edges = from_json_list(edges, PlaylistItem)
+        self.pageInfo = from_json(pageInfo, PageInfo)
+        self.totalCount = totalCount
+    
+    
+    def __str__(self):
+        return str(self.__dict__)

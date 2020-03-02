@@ -1,18 +1,28 @@
-import graphene
-
-from src.entity.base_entity import BaseEntity
 from src.entity.restriction import Restriction
 from src.entity.playable import Playable
-from src.types import *
+from src.utils import *
 
 
-class PlaylistItem(BaseEntity):
-    id = graphene.ID(required=True)
-    position = graphene.Int()
-    restrictions = graphene.List(graphene.NonNull(graphene.Field(Restriction)))
-    isPaused = graphene.Boolean(required=True)
-    node = graphene.Field(Playable, required=True)
+class PlaylistItem:
+    id = None
+    position = None
+    restrictions = None
+    isPaused = None
+    node = None
     
     
-    def __init__(self):
-        super(PlaylistItem, self).__init__()
+    def __init__(self,
+                 id,
+                 position=None,
+                 restrictions=None,
+                 isPaused=None,
+                 node=None):
+        self.id = id
+        self.position = position
+        self.restrictions = from_json(restrictions, Restriction)
+        self.isPaused = isPaused
+        self.node = node
+    
+    
+    def __str__(self):
+        return str(self.__dict__)

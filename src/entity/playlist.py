@@ -1,6 +1,6 @@
 from src.entity.playable import Playable
 from src.entity.restriction import Restriction
-from src.entity.campaign import Campaign
+from src.entity.playlistitemconnection import PlaylistItemConnection
 from src.utils import *
 
 
@@ -14,19 +14,19 @@ class Playlist(Playable):
     
     def __init__(self,
                  id,
-                 name,
-                 category,
-                 tags,
-                 isPaused,
-                 restrictions,
-                 items):
+                 name=None,
+                 category=None,
+                 tags=None,
+                 isPaused=None,
+                 restrictions=None,
+                 items=None):
         super(Playlist, self).__init__(id, name)
         
         self.category = category
         self.tags = from_json_list(tags, str)
         self.isPaused = isPaused
         self.restrictions = from_json_list(restrictions, Restriction)
-        self.items = from_json_list(items, Campaign)
+        self.items = from_json(items, PlaylistItemConnection)
     
     
     def __str__(self):

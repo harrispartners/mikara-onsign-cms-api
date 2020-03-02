@@ -1,4 +1,5 @@
 import json
+import pytz
 import dateutil.parser
 
 
@@ -15,18 +16,36 @@ def parseTimeString(x):
     return dateutil.parser.parse(x).time()
     
     
-def from_json(data, _type, _subtype=None):
+def setAsTimezone(x, tz):
+    if None in [x, tz]:
+        return x
+        
+    if x.tzinfo is None:
+        return pytz.timezone(tz).localize(x)
+    else:
+        return x.replace(tzinfo=pytz.timezone(tz))
+    
+    
+def setAsUTC(x):
+    if x.tzinfo is None:
+        return pytz.timezone("UTC").localize(x)
+    else:
+        return x.replace(tzinfo=pytz.timezone("UTC"))
+    
+    
+def convertToTimezone(x, tz):
+    return x.astimezone(pytz.timezone(tz))
+    
+    
+def from_json(data, _type):
     if type(data) in [type(None), _type]:
         return data
         
     if type(data) is not dict:
         data = json.loads(data)
         
-    if _subtype is not None:
-        data['_subtype'] = _subtype.__name__
-        
     return _type(**data)
-
+    
     
 def from_json_list(data, _type):
     if data is None:
@@ -41,4 +60,6 @@ def create_graphql_request(request_string,
                            variables={}):
     request_type = 'query' if is_request_query else 'mutation'
     
-    return {"operationName": operation_name, "variables": variables, request_type: request_string}
+    return {'operationName': operation_name,
+            'variables': variables,
+            request_type: request_string}

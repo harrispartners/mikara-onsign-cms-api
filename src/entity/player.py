@@ -1,6 +1,10 @@
 from src.entity.workinghours import WorkingHours
 from src.entity.playerloop import PlayerLoop
-from src.entity.playergroupconnection import PlayerGroupConnection
+try:
+    # This prevents circular reference
+    from src.entity.playergroupconnection import PlayerGroupConnection
+except ImportError:
+    pass
 from src.utils import *
 
 
@@ -47,7 +51,7 @@ class Player:
         self.id = id
         self.name = name
         self.errorCount = errorCount
-        self.lastSeen = parseDateTimeString(lastSeen)
+        self.lastSeen = setAsTimezone(parseDateTimeString(lastSeen), timezone)
         self.lastSeenAgo = lastSeenAgo
         self.isConnected = isConnected
         self.syncProgress = syncProgress
@@ -60,8 +64,11 @@ class Player:
         self.attrs = attrs
         self.updateRequested = updateRequested
         self.updateReady = updateReady
-        self.loop = from_json(loop, PlayerLoop, Player)
-        self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
+        self.loop = from_json(loop, PlayerLoop)
+        try:
+            self.playerGroups = from_json(playerGroups, PlayerGroupConnection)
+        except NameError:
+            self.playerGroups = None
     
     
     def __str__(self):

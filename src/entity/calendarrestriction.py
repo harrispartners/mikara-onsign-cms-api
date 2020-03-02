@@ -11,12 +11,12 @@ class CalendarRestriction:
 
 
     def __init__(self,
-                 weekDays,
-                 startTime,
-                 endTime,
-                 startDate,
-                 endDate,
-                 isEndStrict):
+                 weekDays=None,
+                 startTime=None,
+                 endTime=None,
+                 startDate=None,
+                 endDate=None,
+                 isEndStrict=None):
         self.weekDays = from_json_list(weekDays, int)
         self.startTime = parseTimeString(startTime)
         self.endTime = parseTimeString(endTime)
