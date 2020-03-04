@@ -11,11 +11,12 @@ class BaseEntity:
         self.url = onsign.get_base_url()
         self._type = _type
     
-    def post(self, query_json):
+    def post(self, query_json, is_request_query=True):
         try:
             response = self.client.post(self.url, json=query_json)
             response = self._process_response(response)
-            response = getattr(self._type, 'parse')(response)
+            if is_request_query:
+                response = getattr(self._type, 'parse')(response)
         
         except TokenExpiredError:
             self._renew_token()
@@ -25,7 +26,6 @@ class BaseEntity:
 
     def _raise_exception(self, response):
         json_data = response.json()
-        print(json_data)
         if 'errors' in json_data:
             if 'message' in json_data['errors'][0]:
                 message = str(json_data['errors'][0]['message'])
